@@ -91,7 +91,10 @@ class RemoteHermesClient:
             ) as resp:
                 if resp.status != 202:
                     body = await resp.text()
-                    yield {"event": "error", "message": f"Run submission failed ({resp.status}): {body}"}
+                    yield {
+                        "event": "error",
+                        "message": f"Run submission failed ({resp.status}): {body}",
+                    }
                     return
                 run_info = await resp.json()
                 returned_run_id = run_info.get("run_id", run_id)
@@ -106,7 +109,10 @@ class RemoteHermesClient:
                 ) as resp:
                     if resp.status != 200:
                         body = await resp.text()
-                        yield {"event": "error", "message": f"Events stream failed ({resp.status}): {body}"}
+                        yield {
+                            "event": "error",
+                            "message": f"Events stream failed ({resp.status}): {body}",
+                        }
                         return
 
                     # Parse SSE: chunk-based, split on \n\n
@@ -126,7 +132,7 @@ class RemoteHermesClient:
                         remainder = ""
 
                         parts = text.split("\n\n")
-                        # Last part may be incomplete — save for next chunk
+                        # Last part may be incomplete - save for next chunk
                         if not text.endswith("\n\n"):
                             remainder = parts.pop()
 

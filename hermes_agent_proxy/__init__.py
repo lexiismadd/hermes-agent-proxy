@@ -1,15 +1,15 @@
-"""Hermes Agent Proxy — thin proxy from local VS Code/MCP clients to a remote Hermes Agent.
+"""Hermes Agent Proxy - thin proxy from local VS Code/MCP clients to a remote Hermes Agent.
 
 Modes:
-  hermes-agent-proxy acp      — ACP agent (full coding: diffs, terminal, approvals)
-  hermes-agent-proxy mcp      — MCP server (tool passthrough)
-  hermes-agent-proxy install  — Install user systemd services
-  hermes-agent-proxy status   — Check remote health and service status
+  hermes-agent-proxy acp      - ACP agent (full coding: diffs, terminal, approvals)
+  hermes-agent-proxy mcp      - MCP server (tool passthrough)
+  hermes-agent-proxy install  - Install user systemd services
+  hermes-agent-proxy status   - Check remote health and service status
 
 Configuration via .env file in the working directory or environment variables:
-  HERMES_REMOTE_URL   — Remote Hermes API server URL
-  HERMES_REMOTE_KEY   — API server key
-  HERMES_PROFILE      — Profile name (lexi, lana, zaylie) or empty for default
+  HERMES_REMOTE_URL   - Remote Hermes API server URL
+  HERMES_REMOTE_KEY   - API server key
+  HERMES_PROFILE      - Profile name (lexi, lana, zaylie) or empty for default
 """
 
 import argparse
@@ -64,7 +64,7 @@ def main() -> None:
     elif args.command == "status":
         _cmd_status(args)
     else:
-        # acp or mcp — run the relay
+        # acp or mcp - run the relay
         client = _make_client(args.command, args.profile)
         if args.command == "acp":
             _cmd_acp(client)
@@ -89,7 +89,7 @@ def _make_client(mode: str, profile_override: str | None = None):
                 key = key.strip()
                 val = val.strip().strip('"').strip("'")
                 if key in os.environ:
-                    continue  # env var already set — don't override
+                    continue  # env var already set - don't override
                 os.environ[key] = val
 
     url = os.environ.get("HERMES_REMOTE_URL", "http://172.16.1.231:8642")
@@ -147,7 +147,7 @@ _USER_SYSTEMD = Path.home() / ".config" / "systemd" / "user"
 
 _SVC_TEMPLATES = {
     "acp": """[Unit]
-Description=Hermes Relay — ACP agent (%i)
+Description=Hermes Relay - ACP agent (%i)
 After=network-online.target
 Wants=network-online.target
 
@@ -166,7 +166,7 @@ SyslogIdentifier=hermes-agent-proxy-acp
 WantedBy=default.target
 """,
     "mcp": """[Unit]
-Description=Hermes Relay — MCP server (%i)
+Description=Hermes Relay - MCP server (%i)
 After=network-online.target
 Wants=network-online.target
 
@@ -229,7 +229,7 @@ def _cmd_install(args) -> None:
             print(f"   Edit {env_path} and set HERMES_REMOTE_KEY")
         else:
             env_path.write_text("HERMES_REMOTE_URL=http://172.16.1.231:8642\nHERMES_REMOTE_KEY=\nHERMES_PROFILE=\n")
-            print(f"📋 Created .env — edit {env_path} and set HERMES_REMOTE_KEY")
+            print(f"📋 Created .env - edit {env_path} and set HERMES_REMOTE_KEY")
 
     # Load env for profile detection
     profile = args.profile

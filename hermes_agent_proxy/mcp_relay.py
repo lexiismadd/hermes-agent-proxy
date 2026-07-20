@@ -1,4 +1,4 @@
-"""MCP relay server — transparent tool proxy for remote Hermes MCP servers.
+"""MCP relay server - transparent tool proxy for remote Hermes MCP servers.
 
 VS Code connects as an MCP client. The relay lists all MCP tools from the
 remote Hermes and proxies each tool call through the remote agent.
@@ -45,7 +45,9 @@ class HermesRelayMCPServer:
                 Tool(
                     name=t.get("name", ""),
                     description=f"[remote] {t.get('description', '')}",
-                    inputSchema=t.get("inputSchema", t.get("input_schema", t.get("parameters", {}))),
+                    inputSchema=t.get(
+                        "inputSchema", t.get("input_schema", t.get("parameters", {}))
+                    ),
                 )
                 for t in tools
                 if t.get("name")
@@ -60,7 +62,8 @@ class HermesRelayMCPServer:
 
             try:
                 async for evt in self._client.submit_prompt(
-                    text=prompt, session_id=f"mcp-{name}",
+                    text=prompt,
+                    session_id=f"mcp-{name}",
                 ):
                     etype = evt.get("event", "")
                     if etype == "message.delta":
@@ -96,7 +99,9 @@ class HermesRelayMCPServer:
                 ) as resp:
                     if resp.status == 200:
                         caps = await resp.json()
-                        tools = caps.get("tools", caps.get("features", {}).get("tools", []))
+                        tools = caps.get(
+                            "tools", caps.get("features", {}).get("tools", [])
+                        )
                         if tools:
                             return tools
             except Exception:

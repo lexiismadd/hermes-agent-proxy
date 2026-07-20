@@ -1,5 +1,5 @@
 [Unit]
-Description=Hermes Relay — MCP server (%i)
+Description=Hermes Relay - MCP server (%i)
 Documentation=https://github.com/your-org/hermes-agent-proxy
 After=network-online.target
 Wants=network-online.target

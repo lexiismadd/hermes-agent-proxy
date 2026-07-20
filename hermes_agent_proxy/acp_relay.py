@@ -1,4 +1,4 @@
-"""ACP relay agent — bridges ACP protocol to remote Hermes API Server.
+"""ACP relay agent - bridges ACP protocol to remote Hermes API Server.
 
 VS Code talks ACP to this relay. The relay translates to POST /v1/runs
 on the remote Hermes and streams SSE events back as ACP session updates.
