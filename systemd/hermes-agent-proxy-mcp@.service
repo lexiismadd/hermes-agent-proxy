@@ -1,0 +1,27 @@
+[Unit]
+Description=Hermes Relay — MCP server (%i)
+Documentation=https://github.com/your-org/hermes-agent-proxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/hermes-agent-proxy/.env
+ExecStart=%h/.venv/bin/python3 -m hermes_agent_proxy mcp %I
+WorkingDirectory=%h/hermes-agent-proxy
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hermes-agent-proxy-mcp
+
+# Hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.hermes %h/hermes-agent-proxy
+ReadOnlyPaths=%h/hermes-agent-proxy/.env
+
+[Install]
+WantedBy=default.target

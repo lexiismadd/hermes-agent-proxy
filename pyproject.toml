@@ -1,0 +1,22 @@
+[project]
+name = "hermes-agent-proxy"
+version = "0.1.0"
+description = "Thin proxy from local VS Code/MCP clients to a remote Hermes Agent"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp>=3.9",
+]
+
+[project.optional-dependencies]
+acp = ["agent-client-protocol"]
+mcp = ["mcp>=1.0"]
+
+[project.scripts]
+hermes-agent-proxy = "hermes_agent_proxy:main"
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["hermes_agent_proxy*"]
