@@ -1,11 +1,11 @@
 # Hermes Agent Proxy
 
-Thin proxy that lets VS Code and MCP clients on your laptop talk to your remote Hermes Agent server. Two modes:
+Thin proxy that lets VS Code and MCP clients on your local machine talk to a remote Hermes Agent server. Two modes:
 
 - **`hermes-agent-proxy acp`** — full agent inside VS Code (diffs, terminal, approvals, tool calls)
 - **`hermes-agent-proxy mcp`** — transparent MCP tool proxy (ha-mcp, n8n, unclick, etc.)
 
-No model, no tools, no skills on your laptop — just a ~50 MB wire-format translator.
+No model, no tools, no skills on your laptop - just a ~50 MB wire-format translator.
 
 ## Architecture
 
